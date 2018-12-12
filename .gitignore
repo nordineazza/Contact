@@ -1,5 +1,8 @@
 /target/
+/contactv1/target/
+/contactv2/target/
 !.mvn/wrapper/maven-wrapper.jar
+.mvn/
 
 ### STS ###
 .apt_generated
@@ -15,6 +18,8 @@
 *.iws
 *.iml
 *.ipr
+*.cmd
+mvnw
 
 ### NetBeans ###
 /nbproject/private/
