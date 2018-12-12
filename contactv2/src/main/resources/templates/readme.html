@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Info</title>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <style>
+        .page-info {
+            margin: auto;
+            width: 80%;
+        }
+        a:hover {
+            opacity: 0.5;
+        }
+    </style>
+    <script>
+        $(function(){
+            var cpt = 0;
+            $('body').click(function(){
+                var color = ['red', 'orange', 'black', 'green'];
+                cpt++; cpt = cpt%4;
+                $('h1').css('color',color[cpt]);
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="page-info">
+    <h1>Information</h1>
+    <p>C'est une deuxième version de l'application qui nécessite plusieurs améliorations.</p>
+    <ol>
+        <li>Un système d'ajout de tâches</li>
+        <li>Bean validation</li>
+        <li>Une gestion des erreurs (une page d'erreur + 404)</li>
+        <li>Un fichier de log</li>
+    </ol>
+    <p>Ce sera les objectifs à tenir pour la V3.</p>
+    <p><a href="/ContactV2">Revenir à l'application</a></p>
+</div>
+</body>
+</html>
