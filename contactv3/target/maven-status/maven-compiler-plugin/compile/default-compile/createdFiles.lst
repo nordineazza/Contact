@@ -1,0 +1,12 @@
+com/example/contact/config/WebConfiguration.class
+com/example/contact/service/ContactServiceImpl.class
+com/example/contact/config/ApplicationConfiguration$1.class
+com/example/contact/ContactApplicationV2.class
+com/example/contact/service/ContactService.class
+com/example/contact/web/InfoController.class
+com/example/contact/domain/Contact.class
+com/example/contact/config/LangConfiguration.class
+com/example/contact/dao/ContactDAO.class
+com/example/contact/web/ContactController.class
+com/example/contact/config/ApplicationConfiguration.class
+com/example/contact/dao/ContactDAOImpl.class

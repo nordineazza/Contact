@@ -1,6 +1,7 @@
 /target/
 /contactv1/target/
 /contactv2/target/
+/contactv3/target/
 !.mvn/wrapper/maven-wrapper.jar
 .mvn/
 
