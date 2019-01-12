@@ -7,8 +7,9 @@
 	<artifactId>contact</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<modules>
-		<module>contactv2</module>
 		<module>contactv1</module>
+		<module>contactv2</module>
+		<module>contactv3</module>
 	</modules>
 	<packaging>pom</packaging>
 

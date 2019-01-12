@@ -19,7 +19,7 @@ public class Contact implements Serializable {
     @NotEmpty(message = "Un prénom doit être renseigné")
     private String prenom;
 
-    @NotEmpty(message = "Une adresse e-mai doit être renseigné")
+    @NotEmpty(message = "Une adresse e-mail doit être renseignée")
     @Email(message = "E-mail non formaté correctement")
     @Column(unique=true)
     private String mail;

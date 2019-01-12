@@ -6,54 +6,56 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.validation.ConstraintViolationException;
+import javax.validation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/ContactV2")
+@RequestMapping("/ContactV3")
 public class ContactController {
     Logger logger = LoggerFactory.getLogger(ContactController.class);
 
     @Autowired
     private ContactService contactService;
 
+    @Autowired
+    Validator validator;
+
     @GetMapping
     public ModelAndView get() {
         List<Contact> listContact = contactService.getAll();
         ModelAndView mv = new ModelAndView("index");
         mv.addObject("contacts", listContact);
+        mv.addObject("contact", new Contact());
         logger.info(listContact.size() + " contacts sont récupérés");
         return mv;
     }
 
     @PostMapping("/Add")
-    public ModelAndView addContact(@ModelAttribute("contact") Contact contact){
-        ModelAndView mv = new ModelAndView("redirect:/ContactV2");
-        try {
+    public ModelAndView addContact(@Valid @ModelAttribute("contact") Contact contact, BindingResult bindingResult){
+        ModelAndView mv = new ModelAndView("redirect:/ContactV3");
+        if (bindingResult.hasErrors()) {
+            logger.error("errors = " + bindingResult.getAllErrors());
+            mv.setViewName("index");
+            mv.addObject("contacts", contactService.getAll());
+        } else {
             contactService.addContact(contact);
-            logger.info("Le contact a bien été ajouté.", contact);
-        } catch(ConstraintViolationException e) {
-            logger.error("Violation de contraintes");
-
-            mv.addObject("error", "Erreur internationale");
-        } catch (Exception e) {
-            logger.error(e.toString());
         }
         return mv;
     }
 
     @GetMapping("/Delete")
-    public String removeContact(@RequestParam(name="id")String id){
+    public String removeContact(@RequestParam(name="id") String id){
         Long idContact = Long.parseLong(id);
         contactService.deleteContact(idContact);
-        return "redirect:/ContactV2";
+        return "redirect:/ContactV3";
     }
 
     @GetMapping("/Update")
-    public ModelAndView updateContact(@RequestParam(name="id")String id){
+    public ModelAndView updateContact(@RequestParam(name="id") String id){
         Long idContact = Long.parseLong(id);
         Contact c = contactService.getContact(idContact);
         ModelAndView mv = new ModelAndView("update");
@@ -62,9 +64,15 @@ public class ContactController {
     }
 
     @PostMapping("/Update")
-    public String updateContact(@ModelAttribute("contact") Contact contact) {
-        contactService.updateContact(contact);
-        return "redirect:/ContactV2";
+    public ModelAndView updateContact(@Valid @ModelAttribute("contact") Contact contact, BindingResult bindingResult) {
+        ModelAndView mv = new ModelAndView("redirect:/ContactV3");
+        if (bindingResult.hasErrors()) {
+            logger.error("errors = " + bindingResult.getAllErrors());
+            mv.setViewName("update");
+        } else {
+            contactService.updateContact(contact);
+        }
+        return mv;
     }
 
 }

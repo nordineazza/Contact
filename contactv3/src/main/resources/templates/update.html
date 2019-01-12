@@ -4,12 +4,17 @@
     <meta charset="UTF-8">
     <title>Contact</title>
     <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script
             src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
     <script>
         $(function() {
@@ -18,6 +23,11 @@
             });
         });
     </script>
+    <style>
+        .fieldError {
+            border-color: red !important;
+        }
+    </style>
 </head>
 <body>
 <div style="margin: auto; width: 80%;">
@@ -25,22 +35,28 @@
         <h1>
             <span th:text="#{contact.form}"></span>
         </h1>
-        <form class="col s12" action="/ContactV2/Update" method="post">
+        <form class="col s12" th:action="@{/ContactV3/Update}" th:object="${contact}" method="post">
+            <div class="alert alert-danger alert-dismissible" th:if="${#fields.hasAnyErrors()}" th:each="err : ${#fields.allErrors()}">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <p th:text="${err}"></p>
+            </div>
             <div class="row">
                 <input type="hidden" name="id" th:value="${contact.id}" />
                 <div class="input-field col s6">
-                    <input placeholder="John" id="first_name" name="prenom" type="text" class="validate" th:value="${contact.prenom}">
-                    <label for="first_name" th:text="#{contact.prenom}"></label>
+                    <input type="text" th:field="*{prenom}" class="validate" th:value="${contact.prenom}" th:errorclass="fieldError"/>
+                    <label for="prenom" th:text="#{contact.prenom}"></label>
                 </div>
                 <div class="input-field col s6">
-                    <input placeholder="DOE" id="last_name" name="nom" type="text" class="validate" th:value="${contact.nom}">
-                    <label for="first_name" th:text="#{contact.nom}"></label>
+                    <input type="text" th:field="*{nom}" class="validate" th:value="${contact.nom} " th:errorclass="fieldError"/>
+                    <label for="nom" th:text="#{contact.nom}"></label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input placeholder="jdoe@gmail.com" id="email" name="mail" type="email" class="validate" th:value="${contact.mail}">
-                    <label for="first_name" th:text="#{contact.email}"></label>
+                    <input type="email" th:field="*{mail}" class="validate" th:value="${contact.mail}" th:errorclass="fieldError"/>
+                    <label for="mail" th:text="#{contact.email}"></label>
                 </div>
             </div>
             <a class="btn-floating btn-large waves-effect waves-light light-blue lighten-1" style="float: right;"><i class="material-icons">+</i></a>
